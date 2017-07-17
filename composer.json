@@ -1,0 +1,13 @@
+{
+    "name": "root/html",
+    "require": {
+        "fzaninotto/faker": "1.6",
+ 	"nesbot/carbon": "1.21"
+    },
+    "authors": [
+        {
+            "name": "MishaKhripko",
+            "email": "myckua@gmail.com"
+        }
+    ]
+}
