@@ -8,13 +8,14 @@ class CreateController
     {
 
         $result = false;
-        $result = Create::createDB(); // Якщо БД буде створена, метод поверне 1
+        $var = new Create();
+        $result = $var->createDB(); // Якщо БД буде створена, метод поверне 1
         $label = "true";
         if (!$result){
             $label = "false";
         }
 
-        require_once(ROOT . '/views/news/index'.$label.'.php');
+        require_once(ROOT . '/views/create/index'.$label.'.php');
 
         return true;
     }

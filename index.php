@@ -17,8 +17,7 @@ require_once(ROOT.'/components/Db.php');
 // 3. Установка соединения с БД
 
 // 4. Вызор Router
-
+echo $_SERVER['DOCUMENT_ROOT']."<BR>";
+echo ROOT."<BR>";
 $router = new Router();
 $router->run();
-
-echo('asdgfhjhfdasd');

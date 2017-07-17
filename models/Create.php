@@ -3,13 +3,18 @@
 class Create
 {
     public function createDB(){
-        $query = fopen(ROOT.'/config/createdb.sql','rt');
+        echo ROOT.'/config/createdb.sql';
+        $query = fopen(ROOT.'/config/createdb.txt','r');
+        $query = "CREATE DATABASE university;";
         $db = Db::getConnection();
-        $result = $db->exec($query); // Виконає запит що в /config/createdb.sql (створить бд)
-        if ($result) {
-            return true;
-        } else {
-            return false;
+        echo "<br>".$query;
+        if ($db !== null) {
+            $result = $db->exec($query) or die(print_r($db->errorInfo(), true)); // Виконає запит що в /config/createdb.sql (створить бд)
+            if ($result) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 }
