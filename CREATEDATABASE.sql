@@ -1,9 +1,9 @@
-CREATE DATABASE University;
+CREATE DATABASE university;
 
 use University;
 
 -- Університети
-CREATE TABLE Universities( 
+CREATE TABLE universities( 
 	idUniver int NOT NULL AUTO_INCREMENT,
 	nameUniver varchar(64) NOT NULL,
 	cityUniver varchar(32),
@@ -12,44 +12,45 @@ CREATE TABLE Universities(
 );
 
 -- Кафедри
-CREATE TABLE Chairs ( 
+CREATE TABLE chairs ( 
 	idChairs int NOT NULL AUTO_INCREMENT,
 	nameChairs varchar(64),
 	PRIMARY KEY (idChairs),
-	FOREIGN KEY (idUniver) REFERENCES Universities(idUniver)
+	FOREIGN KEY (idUniver) REFERENCES universities(idUniver)
 );
 
 -- Студенти
-CREATE TABLE Students (
+CREATE TABLE students (
 	idStudent int NOT NULL AUTO_INCREMENT,
 	firstnameStudent varchar(16) NOT NULL,
 	lastNameStudent varchar(16) NOT NULL,
 	numberphoneStudent varchar(12),
 	PRIMARY KEY (idStudents),
-	FOREIGN KEY (idChairs) REFERENCES Chairs(idChairs)
+	FOREIGN KEY (idChairs) REFERENCES chairs(idChairs)
 );
 
 -- Викладачі
-CREATE TABLE Teacher (
+CREATE TABLE teacher (
 	idTeacher int NOT NULL AUTO_INCREMENT,
 	firstnameTeacher varchar(16) NOT NULL,
 	lastnameTeacher varchar(16) NOT NULL,
 	PRIMARY KEY (idTeacher),
-	FOREIGN KEY (idChairs) REFERENCES Chairs(idChairs)
+	FOREIGN KEY (idChairs) REFERENCES chairs(idChairs)
 );
 
 -- Для зв'язку багато для багатьох. Один вчитель може мати багато дисциплін. Одну дисципліну можуть викладати багато вчителів.
-CREATE TABLE TeacherToDiscipline (
+CREATE TABLE teacherToDiscipline (
 	teacher_id int,
 	discipline_id int,
-	FOREIGN KEY (idTeacher) REFERENCES Teacher(idTeacher),
-	FOREIGN KEY (idDiscipline) REFERENCES Discipline(idDiscipline)
+	FOREIGN KEY (idTeacher) REFERENCES teacher(idTeacher),
+	FOREIGN KEY (idDiscipline) REFERENCES discipline(idDiscipline),
+	UNIQUE (teacher_id, discipline_id)
 );
 
 -- Дисципліни
-CREATE TABLE Discipline (
+CREATE TABLE discipline (
 	idDiscipline int NOT NULL AUTO_INCREMENT,
 	nameDiscipline varchar(64) NOT NULL,
 	PRIMARY KEY (idDiscipline),
-	FOREIGN KEY (idChairs) REFERENCES Chairs(idCharis)
+	FOREIGN KEY (idChairs) REFERENCES chairs(idCharis)
 );
