@@ -4,7 +4,7 @@
     <title>Create</title>
 </head>
 <body>
-<h1>Fill database</h1>
+<h1><a href='/create'>Створити БД.   </a><a href='/fill'>Заповнити БД.   </a><a href='/chairs'>Кафедри</a></h1><br>
 <p>
     <?php if ($this->record !== NULL){
         echo "База даних Заповнена!";

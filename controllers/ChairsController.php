@@ -1,12 +1,15 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: mario
- * Date: 19.07.17
- * Time: 11:22
- */
+include_once ROOT. '/models/Chairs.php';
+
 class ChairsController
 {
+    public function actionIndex(){
+        $listChairs = array();
+        $listChairs = Chairs::getListChairs();
 
+        require_once(ROOT . '/views/chairs/index.php');
+
+        return true;
+    }
 }

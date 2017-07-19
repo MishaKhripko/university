@@ -127,7 +127,7 @@ class Fill
         }
         return $var;
     }
-    public function actionIndex(){
+    public function getReport(){
         $var = array();
         $var['universities'] = $this->addTableUniversities($this->count["universities"]);
         $var['chairs'] = $this->addTableChairs($this->count["chairs"], $this->count["universities"]);
