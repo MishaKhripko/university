@@ -1,52 +1,72 @@
 <?php
 
+namespace Models;
 
+use Components\Db;
+
+/**
+ * Class Chairs
+ * @package Models
+ */
 class Chairs
 {
-    static public function getListChairs(){
+    /**
+     * @return array
+     */
+    static public function getListChairs()
+    {
         $db = Db::getConnectionWithDb();
         $newsList = array();
 
-        $result = $db->query('
+        $result = $db->query(
+            '
         SELECT chairs.idChairs, universities.nameUniver, chairs.nameChairs 
         FROM chairs INNER JOIN universities ON 
         chairs.idUniver = universities.idUniver 
         ORDER BY idChairs ASC
-        ');
+        '
+        );
         $i = 0;
-        while($row = $result->fetch()) {
+        while ($row = $result->fetch()) {
             $newsList[$i]['idChairs'] = $row['idChairs'];
             $newsList[$i]['nameUniver'] = $row['nameUniver'];
             $newsList[$i]['nameChairs'] = $row['nameChairs'];
             $i++;
         }
+
         return $newsList;
     }
-    static public function getChairsById($idChairs){
+
+    /**
+     * @param $idChairs
+     * @return mixed
+     */
+    static public function getChairsById($idChairs)
+    {
         $db = Db::getConnectionWithDb();
-        if (isset($_POST["idChairs"])){
+        if (isset($_POST["idChairs"])) {
             //switch ($_POST[$update])
-            try{
+            try {
                 $result = $db->exec();
-            }
-            catch (Exception $exception){
+            } catch (\Exception $exception) {
                 echo $exception->getMessage();
             }
-        }
-        else {
+        } else {
             $newList = array();
 
             try {
-                $result = $db->query("
+                $result = $db->query(
+                    "
                 SELECT chairs.idChairs, universities.nameUniver, chairs.nameChairs 
                 FROM chairs INNER JOIN universities ON 
                 chairs.idUniver = universities.idUniver
-                WHERE chairs.idChairs = " . $idChairs . "
+                WHERE chairs.idChairs = ".$idChairs."
                 ORDER BY idChairs ASC
-            ");
-                return $result->fetch(PDO::FETCH_ASSOC);
-            }
-            catch (Exception $exception) {
+            "
+                );
+
+                return $result->fetch(\PDO::FETCH_ASSOC);
+            } catch (\Exception $exception) {
                 echo $exception->getMessage();
             }
         }

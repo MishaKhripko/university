@@ -1,18 +1,28 @@
 <?php
 
-include_once ROOT. '/models/News.php';
+namespace Controllers;
 
-class NewsController {
+use Models\News;
 
-	public function actionIndex()
-	{
-		
-		$newsList = array();
-		$newsList = News::getNewsList();
+/**
+ * Class NewsController
+ * @package Controllers
+ */
+class NewsController
+{
 
-		require_once(ROOT . '/views/news/index.php');
+    /**
+     * @return bool
+     */
+    public function actionIndex()
+    {
 
-		return true;
-	}
+        $newsList = array();
+        $newsList = News::getNewsList();
+
+        require_once(ROOT.'/views/news/index.php');
+
+        return true;
+    }
 }
 
