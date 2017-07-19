@@ -26,7 +26,7 @@ class Router
                 //$segments = explode('/', $uri);
                 $internalRoute = preg_replace("~$uriPattern~", $path, $uri);
 
-                if ($internalRoute === 'change') $internalRoute = $uri;
+                //if ($internalRoute === 'change') $internalRoute = $uri;
 
                 $segments = explode('/', $internalRoute);
 

@@ -27,7 +27,16 @@ class Chairs
         if (isset($_POST["idChairs"])){
             //switch ($_POST[$update])
             try{
-                $result = $db->exec();
+                $result = $db->prepare("
+                UPDATE chairs
+                SET nameChairs = :nameChairs
+                WHERE idChairs = :idChairs;
+                ");
+                //echo $_POST["nameChairs"]." ".$_POST["idChairs"]." !";
+                $result->bindValue(':nameChairs', $_POST["nameChairs"],\PDO::PARAM_STR);
+                $result->bindValue(':idChairs',$_POST["idChairs"],\PDO::PARAM_INT);
+                if($result->execute()) echo "+";
+                else echo "-";
             }
             catch (Exception $exception){
                 echo $exception->getMessage();

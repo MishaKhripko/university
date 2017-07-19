@@ -10,7 +10,7 @@
 <h1>Список Кафедр</h1>
 <table>
         <tr>
-            <form action = "" method="post">
+            <form action = "/chairs/open/<?php echo $arrayidChairs['idChairs'] ;?>" method="post">
             <td>
                 <input type ="text" size="3" readonly name = "idChairs" value ="<?php echo $arrayidChairs['idChairs'] ;?>">
             </td>
@@ -23,7 +23,6 @@
             </td>
                 <td>
                     <input type="submit" name="update" value="Оновити">
-                    <input type="submit" name="delete" value="Видалити">
                 </td>
             </form>
         </tr>
