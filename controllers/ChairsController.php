@@ -13,12 +13,16 @@ class ChairsController
         return true;
     }
     public function actionOpen($id){
-        //$id = $id[0];
         $arrayidChairs = array();
         $arrayidChairs = Chairs::getChairsById($id);
 
         require_once(ROOT . '/views/chairs/update.php');
 
         return true;
+    }
+    public function actionDelete($id)
+    {
+        $result = Chairs::deleteChairsById($id);
+        header('Location: /chairs');
     }
 }

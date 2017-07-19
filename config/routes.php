@@ -5,7 +5,7 @@ return array(
 	//'news' => 'news/index',
     'chairs/open/' => 'chairs/open/',
     //'chairs/open/([0-9]+)' => 'change',
-
+    'chairs/delete' => 'chairs/delete',
     'create' => 'create/index',
     'fill' => 'fill/index',
     'university' => 'university/index',

@@ -60,4 +60,13 @@ class Chairs
             }
         }
     }
+    static public function deleteChairsById($idChairs){
+        $db = Db::getConnectionWithDb();
+        $result = $db->prepare('
+        DELETE FROM chairs
+        WHERE idChairs = :idChairs
+        ');
+        $result->bindValue(':idChairs',$idChairs,\PDO::PARAM_INT);
+        $result->execute();
+    }
 }
