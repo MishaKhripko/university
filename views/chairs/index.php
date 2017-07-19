@@ -21,6 +21,10 @@
             <td>
                 <input type ="text" size="32" value ="<?php echo $listItem['nameChairs'] ;?>">
             </td>
+            <td>
+                <a href="/chairs/open/<?php echo $listItem['idChairs'] ;?>">Відкрити  </a>
+                <a href="/chairs/delete/<?php echo $listItem['idChairs'] ;?>">  Видалити</a>
+            </td>
         </tr>
     <?php endforeach;?>
 </table>

@@ -23,7 +23,10 @@ class Router
 		foreach ($this->routes as $uriPattern => $path) {
 
 			if(preg_match("~$uriPattern~", $uri)) {
-				$internalRoute = preg_replace("~$uriPattern~", $path, $uri);
+                //$segments = explode('/', $uri);
+                $internalRoute = preg_replace("~$uriPattern~", $path, $uri);
+
+                if ($internalRoute === 'change') $internalRoute = $uri;
 
                 $segments = explode('/', $internalRoute);
 
@@ -43,7 +46,7 @@ class Router
 				/*$result = $controllerObject->$actionName($parameters); - OLD VERSION */
 				/*$result = call_user_func(array($controllerObject, $actionName), $parameters);*/
                 /** @var DELETE $actionName */
-                $actionName = "actionIndex";
+                //$actionName = "actionIndex";
 				$result = call_user_func_array(array($controllerObject, $actionName), $parameters);
 				
 				if ($result != null) {

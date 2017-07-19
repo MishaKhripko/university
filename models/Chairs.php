@@ -22,5 +22,33 @@ class Chairs
         }
         return $newsList;
     }
+    static public function getChairsById($idChairs){
+        $db = Db::getConnectionWithDb();
+        if (isset($_POST["idChairs"])){
+            //switch ($_POST[$update])
+            try{
+                $result = $db->exec();
+            }
+            catch (Exception $exception){
+                echo $exception->getMessage();
+            }
+        }
+        else {
+            $newList = array();
 
+            try {
+                $result = $db->query("
+                SELECT chairs.idChairs, universities.nameUniver, chairs.nameChairs 
+                FROM chairs INNER JOIN universities ON 
+                chairs.idUniver = universities.idUniver
+                WHERE chairs.idChairs = " . $idChairs . "
+                ORDER BY idChairs ASC
+            ");
+                return $result->fetch(PDO::FETCH_ASSOC);
+            }
+            catch (Exception $exception) {
+                echo $exception->getMessage();
+            }
+        }
+    }
 }
