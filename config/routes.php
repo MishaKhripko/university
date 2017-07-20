@@ -8,6 +8,8 @@ return array(
     'chairs/delete' => 'chairs/delete',
     'university/open' => 'university/open',
     'university/delete' => 'university/delete',
+    'students/open' => 'students/open',
+    'students/delete' => 'students/delete',
 
     'create' => 'create/index',
     'fill' => 'fill/index',
