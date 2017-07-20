@@ -35,8 +35,7 @@ class Chairs
                 //echo $_POST["nameChairs"]." ".$_POST["idChairs"]." !";
                 $result->bindValue(':nameChairs', $_POST["nameChairs"],\PDO::PARAM_STR);
                 $result->bindValue(':idChairs',$_POST["idChairs"],\PDO::PARAM_INT);
-                if($result->execute()) echo "+";
-                else echo "-";
+                return $result->execute();
             }
             catch (Exception $exception){
                 echo $exception->getMessage();
@@ -44,13 +43,12 @@ class Chairs
         }
         else {
             $newList = array();
-
             try {
                 $result = $db->query("
                 SELECT chairs.idChairs, universities.nameUniver, chairs.nameChairs 
                 FROM chairs INNER JOIN universities ON 
                 chairs.idUniver = universities.idUniver
-                WHERE chairs.idChairs = " . $idChairs . "
+                WHERE chairs.idChairs = ".$idChairs."
                 ORDER BY idChairs ASC
             ");
                 return $result->fetch(PDO::FETCH_ASSOC);
@@ -68,5 +66,23 @@ class Chairs
         ');
         $result->bindValue(':idChairs',$idChairs,\PDO::PARAM_INT);
         $result->execute();
+    }
+    static public function addRecord($arrayPost){
+        $db = Db::getConnectionWithDb();
+        echo $arrayPost[0].$arrayPost[1];
+        try {
+            $result = $db->prepare('
+        INSERT INTO `chairs` (`idUniver`, `nameChairs`) VALUES (:idUniver, :nameChairs)
+        ');
+            $result->bindValue(':idUniver', $arrayPost[0], \PDO::PARAM_INT);
+            $result->bindValue(':nameChairs', $arrayPost[1], \PDO::PARAM_STR);
+        }
+        catch (Exception $exception){
+            echo $exception->getMessage();
+        }
+        if ($result->execute())
+            return true;
+        else
+            return false;
     }
 }

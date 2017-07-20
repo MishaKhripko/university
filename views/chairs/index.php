@@ -14,7 +14,6 @@
             <td>
                 <input type ="text" size="3" readonly value ="<?php echo $listItem['idChairs'] ;?>">
             </td>
-            </td>
             <td>
                 <input type ="text" size="32" readonly value ="<?php echo $listItem['nameUniver'] ;?>">
             </td>
@@ -27,6 +26,30 @@
             </td>
         </tr>
     <?php endforeach;?>
+    <tr>
+        <form action="" method="post">
+            <td>
+                <span>
+                    Додати:
+                </span>
+            </td>
+            <td>
+                <select name = "idUniver">
+                    <?php $i=0; foreach ($listUniversities as $listItem):?>
+                        <option value="<?php echo $listItem['idUniver'] ;?>">
+                            <?php echo $listItem['nameUniver'] ;?>
+                        </option>
+                    <?php $i++; endforeach;?>
+                </select>
+            </td>
+            <td>
+                <input type ="text" size="32" name = "nameChairs">
+            </td>
+            <td>
+                <input type="submit" value="Додати кафедру">
+            </td>
+        </form>
+    </tr>
 </table>
 </body>
 </html>
