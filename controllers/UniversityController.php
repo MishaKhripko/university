@@ -10,8 +10,8 @@ class UniversityController
      */
     static public function actionIndex(){
         $listUniversity = [];
-        if(isset($_POST['idUniver'])){
-            $result = University::addUniversity($_POST['idUniver']);
+        if(isset($_POST['submit'])){
+            $result = University::addUniversity(array($_POST['nameUniver'], $_POST['cityUniver'], $_POST['siteUniver']));
             if ($result){
                 header('Location: ', '/university');
             }
@@ -30,6 +30,7 @@ class UniversityController
         $arrayGetRow = University::getUniversityById($idUniver);
 
         require_once(ROOT.'/views/university/update.php');
+        return true;
     }
 
     /**

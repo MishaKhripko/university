@@ -29,7 +29,7 @@ class University
         $i =0;
         try {
             while ($row = $result->fetch()) {
-                $list[$i]['idUniver'] = $row['idUniver]'];
+                $list[$i]['idUniver'] = $row['idUniver'];
                 $list[$i]['nameUniver'] = $row['nameUniver'];
                 $list[$i]['cityUniver'] = $row['cityUniver'];
                 $list[$i]['siteUniver'] = $row['siteUniver'];
@@ -43,30 +43,43 @@ class University
     }
     static public function getUniversityById($idUniver){
         $db = Db::getConnectionWithDb();
-        try {
-            $result = $db->query('
-            SELECT * FROM universities
-            WHERE idUniver = :idUniver;
+        if (isset($_POST['update'])){
+            $result = $db->prepare('
+            UPDATE university
+            SET nameUniver = :nameUniver, cityUniver = :cityUniver, siteUniver = :siteUniver
+            WHERE idUniver = :idUniver
             ');
-            $result->bindValue(':idUniver', $idUniver, \PDO::PARAM_INT);
-            $result = $result->fetch();
+            $result->bindValue(':nameUniver', $_POST['nameUniver'], \PDO::PARAM_STR);
+            $result->bindValue(':cityUniver', $_POST['cityUniver'], \PDO::PARAM_STR);
+            $result->bindValue(':siteUniver', $_POST['siteUniver'], \PDO::PARAM_STR);
+            $result->bindValue(':idUniver', $idUniver,\PDO::PARAM_INT);
+            return $result->execute();
         }
-        catch(Exception $exception){
-            echo $exception->getMessage();
-            $result = FALSE;
+        else {
+            try {
+                $result = $db->query("
+            SELECT * FROM universities
+            WHERE idUniver = ".$idUniver.";
+            ");
+                $result = $result->fetch(PDO::FETCH_ASSOC);
+            } catch (Exception $exception) {
+                echo $exception->getMessage();
+                $result = FALSE;
+            }
+            return $result;
         }
-        return $result;
     }
     static public function addUniversity($row){
         $db = Db::getConnectionWithDb();
         $result = $db->prepare('
         INSERT INTO `universities` (`nameUniver`, `cityUniver`, `siteUniver`)
-        VALUES (:nameUniver, :cityUniver, :sityUniver);
+        VALUES (:nameUniver, :cityUniver, :siteUniver)
 ');
         try {
-            $result->bindValue(':nameUniver', $row['nameUniver'], \PDO::PARAM_STR);
-            $result->bindValue(':cityUniver', $row['cityUniver'], \PDO::PARAM_STR);
-            $result->bindValue(':siteUniver', $row['siteUniver'], \PDO::PARAM_STR);
+            $result->bindValue(':nameUniver', $row[0], \PDO::PARAM_STR);
+            $result->bindValue(':cityUniver', $row[1], \PDO::PARAM_STR);
+            $result->bindValue(':siteUniver', $row[2], \PDO::PARAM_STR);
+            echo $row[0].$row[1].$row[2];
             return $result->execute();
         }
         catch (Exception $exception){
