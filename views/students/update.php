@@ -17,7 +17,7 @@
             <td>
             <select name ='idChairs'>
                 <?php foreach ($arrayListChairs as $listItem):?>
-                <option value = '<?php echo $listItem['idChairs'] ;?>'>
+                <option value = '<?php echo $listItem['idChairs'] ;?>'<?php if ($listItem['nameChairs'] === $arrayIdStudent['nameChairs']) echo " selected";?>>
                     <?php echo $listItem['nameChairs'] ;?>
                 </option>
                 <?php endforeach;?>
