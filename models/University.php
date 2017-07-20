@@ -27,14 +27,35 @@ class University
         $result = $db->query('SELECT * FROM universities');
         $list = [];
         $i =0;
-        while($row = $result->fetch()){
-            $list[$i]['idUniver'] = $row['idUniver]'];
-            $list[$i]['nameUniver'] = $row['nameUniver'];
-            $list[$i]['cityUniver'] = $row['cityUniver'];
-            $list[$i]['siteUniver'] = $row['siteUniver'];
-            $i++;
+        try {
+            while ($row = $result->fetch()) {
+                $list[$i]['idUniver'] = $row['idUniver]'];
+                $list[$i]['nameUniver'] = $row['nameUniver'];
+                $list[$i]['cityUniver'] = $row['cityUniver'];
+                $list[$i]['siteUniver'] = $row['siteUniver'];
+                $i++;
+            }
+        }
+        catch (Exception $exception){
+            echo $exception->getMessage();
         }
         return $list;
+    }
+    static public function getUniversityById($idUniver){
+        $db = Db::getConnectionWithDb();
+        try {
+            $result = $db->query('
+            SELECT * FROM universities
+            WHERE idUniver = :idUniver;
+            ');
+            $result->bindValue(':idUniver', $idUniver, \PDO::PARAM_INT);
+            $result = $result->fetch();
+        }
+        catch(Exception $exception){
+            echo $exception->getMessage();
+            $result = FALSE;
+        }
+        return $result;
     }
     static public function addUniversity($row){
         $db = Db::getConnectionWithDb();
@@ -70,5 +91,15 @@ class University
 
             }
         }
+    }
+
+    static public function deleteUniversityById($idUniver){
+        $db = Db::getConnectionWithDb();
+        $result = $db->prepare('
+        DELETE FROM universities
+        WHERE idUniver = :idUniver
+        ');
+        $result->bindValue(':idUniver',$idUniver,\PDO::PARAM_INT);
+        $result->execute();
     }
 }

@@ -6,6 +6,9 @@ return array(
     'chairs/open/' => 'chairs/open/',
     //'chairs/open/([0-9]+)' => 'change',
     'chairs/delete' => 'chairs/delete',
+    'university/open' => 'university/open',
+    'university/delete' => 'university/delete',
+
     'create' => 'create/index',
     'fill' => 'fill/index',
     'university' => 'university/index',
