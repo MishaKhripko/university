@@ -1,10 +1,11 @@
 <?php
 
-
+include_once ROOT.'/models/Students.php';
+include_once ROOT.'/models/Chairs.php';
 
 class StudentsController
 {
-    public function actionIndex($idStudent){
+    public function actionIndex(){
         if (isset($_POST['idChairs'])){
             $result = Students::addStudent(array($_POST['idChairs'], $_POST['firstnameStudent'], $_POST['lastnameStudent'], $_POST['numberphoneStudent']));
             if ($result){
@@ -20,8 +21,10 @@ class StudentsController
     }
 
     public function actionOpen($idStudent){
-        Students::deleteStudentById($idStudent);
-        require_once(ROOT.'/views/university/update.php');
+        $arrayIdStudent = Students::getStudentById($idStudent);
+        $arrayListChairs = Chairs::getListChairs();
+        require_once(ROOT.'/views/students/update.php');
+        return true;
     }
 
     public function actionDelete($idStudent){

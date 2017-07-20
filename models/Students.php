@@ -3,7 +3,7 @@
 
 class Students
 {
-    static public function getlistStudents($idStudent){
+    static public function getlistStudents(){
         $db = Db::getConnectionWithDb();
         $result = $db->query('
         SELECT students.idStudent, students.firstnameStudent, students.lastnameStudent, numberphoneStudent, chairs.nameChairs
@@ -65,7 +65,7 @@ class Students
         DELETE FROM students
         WHERE idStudent = :idStudent
         ');
-        $result->bindValue(':idStudents',$idStudent,\PDO::PARAM_INT);
+        $result->bindValue(':idStudent',$idStudent,\PDO::PARAM_INT);
         $result->execute();
     }
 
