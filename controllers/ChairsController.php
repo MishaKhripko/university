@@ -1,6 +1,7 @@
 <?php
 
 include_once ROOT.'/models/Chairs.php';
+include_once ROOT.'/models/University.php';
 
 class ChairsController
 {

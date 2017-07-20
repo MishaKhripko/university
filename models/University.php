@@ -45,7 +45,7 @@ class University
         $db = Db::getConnectionWithDb();
         if (isset($_POST['update'])){
             $result = $db->prepare('
-            UPDATE university
+            UPDATE universities
             SET nameUniver = :nameUniver, cityUniver = :cityUniver, siteUniver = :siteUniver
             WHERE idUniver = :idUniver
             ');
