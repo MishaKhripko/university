@@ -51,7 +51,7 @@ class Chairs
                 WHERE chairs.idChairs = ".$idChairs."
                 ORDER BY idChairs ASC
             ");
-                return $result->fetch(PDO::FETCH_ASSOC);
+                return $result->fetch(\PDO::FETCH_ASSOC);
             }
             catch (Exception $exception) {
                 echo $exception->getMessage();
