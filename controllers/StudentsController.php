@@ -14,6 +14,7 @@ class StudentsController
         } else {
 
             $listStudents = Students::getlistStudents();
+            $arrayListChairs = Chairs::getListChairs();
 
             require_once(ROOT . '/views/students/index.php');
             return true;

@@ -15,10 +15,16 @@
                 <input type ="text" size="3" readonly value ="<?php echo $listItem['idStudent'] ;?>">
             </td>
             <td>
-                <input type ="text" size="32" readonly value ="<?php echo $listItem['firstnameStudent'] ;?>">
+                <input type ="text" size="25" value ="<?php echo $listItem['nameChairs'] ;?>">
             </td>
             <td>
-                <input type ="text" size="32" value ="<?php echo $listItem['lastnameStudent'] ;?>">
+                <input type ="text" size="10" value ="<?php echo $listItem['firstnameStudent'] ;?>">
+            </td>
+            <td>
+                <input type ="text" size="10" value ="<?php echo $listItem['lastnameStudent'] ;?>">
+            </td>
+            <td>
+                <input type ="text" size="10" value ="<?php echo $listItem['numberphoneStudent'] ;?>">
             </td>
             <td>
                 <a href="/students/open/<?php echo $listItem['idStudent'] ;?>">Відкрити  </a>
@@ -26,7 +32,7 @@
             </td>
         </tr>
     <?php endforeach;?>
-    <!--<tr>
+    <tr>
         <form action="" method="post">
             <td>
                 <span>
@@ -34,23 +40,28 @@
                 </span>
             </td>
             <td>
-                <select name = "idUniver">
-                    <?php $i=0; foreach ($listStudents as $listItem):?>
-                        <option value="<?php echo $listItem['idUniver'] ;?>">
-                            <?php echo $listItem['nameUniver'] ;?>
+                <select name ='idChairs'>
+                    <?php foreach ($arrayListChairs as $listItem):?>
+                        <option value = "<?php echo $listItem['idChairs'] ;?>">
+                                <?php echo $listItem['nameChairs'] ;?>
                         </option>
-                        <?php $i++; endforeach;?>
+                    <?php endforeach;?>
                 </select>
             </td>
             <td>
-                <input type ="text" size="32" name = "nameChairs">
+                <input type ="text" size="10" name = "firstnameStudent">
+            </td>
+            <td>
+                <input type ="text" size="10" name = "lastnameStudent">
+            </td>
+            <td>
+                <input type ="text" size="10" name = "numberphoneStudent">
             </td>
             <td>
                 <input type="submit" value="Додати кафедру">
             </td>
         </form>
     </tr>
-    -->
 </table>
 </body>
 </html>
