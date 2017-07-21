@@ -6,7 +6,12 @@
     <title>Create</title>
 </head>
 <body>
-<a href='/create'>Створити БД   </a><a href='/fill'>Заповнити БД.   </a><a href='/chairs'>Кафедри.   </a><br><a href='/university'>Університети.</a><br>
+<a href='/create'>Створити БД   </a>
+<a href='/fill'>Заповнити БД.   </a>
+<a href='/chairs'>Кафедри.   </a>
+<a href='/university'>Університет.   </a>
+<a href='/students'>Студенти.   </a><br>
+<br>
 <h1>Список Університетів</h1>
 <table>
     <tr>

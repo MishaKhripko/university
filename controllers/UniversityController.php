@@ -1,6 +1,7 @@
 <?php
 
-include_once ROOT. '/models/University.php';
+namespace Controllers;
+use Models\University;
 
 class UniversityController
 {
@@ -17,7 +18,6 @@ class UniversityController
             }
         }
         $listUniver = University::getListUniversities();
-
         require_once(ROOT.'/views/university/index.php');
     }
 
@@ -40,7 +40,6 @@ class UniversityController
      */
     static public function actionDelete($idUniver){
         $result = University::deleteUniversityById($idUniver);
-
         header('Location: /university');
     }
 }

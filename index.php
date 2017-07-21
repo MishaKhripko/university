@@ -1,23 +1,26 @@
 <?php
 
-// FRONT COTROLLER
-
-// 1. Общие настройки
-
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-// 2. Подключение файлов системы
-
 define('ROOT', dirname(__FILE__));
-require_once(ROOT.'/vendor/autoload.php');
-require_once(ROOT.'/components/Router.php');
-require_once(ROOT.'/components/Db.php');
+require_once __DIR__.'/vendor/autoload.php';
 
-// 3. Установка соединения с БД
-
-// 4. Вызор Router
-//echo $_SERVER['DOCUMENT_ROOT']."<BR>";
-//echo ROOT."<BR>";
-$router = new Router();
-$router->run();
+$routes = require_once __DIR__.'/config/routes.php';
+$url = '';
+if (!empty($_SERVER['REQUEST_URI'])) {
+    $url = trim($_SERVER['REQUEST_URI'], '/');
+}
+foreach ($routes as $uriPattern => $path) {
+    if (preg_match("~$uriPattern~", $url)) {
+        $internalRoute = preg_replace("~$uriPattern~", $path, $url);
+        $segments = explode('/', $internalRoute);
+        $controllerName = 'Controllers\\'.ucfirst(array_shift($segments).'Controller');
+        $actionName = 'action'.ucfirst(array_shift($segments));
+        $parameters = $segments;
+        $result = call_user_func_array(array(new $controllerName, $actionName), $parameters);
+        if ($result != null) {
+            break;
+        }
+    }
+}

@@ -6,9 +6,25 @@
     <title>Create</title>
 </head>
 <body>
-<h1><a href='/create'>Створити БД   </a><a href='/fill'>Заповнити БД.   </a><a href='/chairs'>Кафедри</a></h1><br>
+
+<a href='/create'>Створити БД   </a>
+<a href='/fill'>Заповнити БД.   </a>
+<a href='/chairs'>Кафедри.   </a>
+<a href='/university'>Університет.   </a>
+<a href='/students'>Студенти.   </a><br>
+<br>
 <h1>Список Студентів</h1>
 <table>
+    <form action = "" method="post">
+        <tr>
+            <td colspan="5">
+                <input type="text" size="80" name="search">
+            </td>
+            <td>
+                <input type="submit" value = "Пошук">
+            </td>
+        </tr>
+    </form>
     <?php foreach ($listStudents as $listItem):?>
         <tr>
             <td>

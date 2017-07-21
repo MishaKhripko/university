@@ -1,11 +1,8 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: mario
- * Date: 20.07.17
- * Time: 9:56
- */
+namespace Models;
+use Components\Db;
+
 class University
 {
     static public function getIdNameUniversities(){
@@ -61,7 +58,7 @@ class University
             SELECT * FROM universities
             WHERE idUniver = ".$idUniver.";
             ");
-                $result = $result->fetch(PDO::FETCH_ASSOC);
+                $result = $result->fetch(\PDO::FETCH_ASSOC);
             } catch (Exception $exception) {
                 echo $exception->getMessage();
                 $result = FALSE;
@@ -79,7 +76,7 @@ class University
             $result->bindValue(':nameUniver', $row[0], \PDO::PARAM_STR);
             $result->bindValue(':cityUniver', $row[1], \PDO::PARAM_STR);
             $result->bindValue(':siteUniver', $row[2], \PDO::PARAM_STR);
-            echo $row[0].$row[1].$row[2];
+            //echo $row[0].$row[1].$row[2];
             return $result->execute();
         }
         catch (Exception $exception){

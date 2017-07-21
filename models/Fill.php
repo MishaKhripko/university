@@ -1,6 +1,13 @@
 <?php
-require_once(ROOT.'/vendor/autoload.php');
 
+namespace Models;
+
+use Components\Db;
+
+/**
+ * Class Fill
+ * @package Models
+ */
 class Fill
 {
     private $faker;
@@ -15,29 +22,39 @@ class Fill
     );
     public function __construct()
     {
-        //$paramsPath = ROOT . '/config/createdb.php';
-        //$this->params = include($paramsPath);
         $this->dbconnect = Db::getConnectionWithDb();
-        $this->faker = Faker\Factory::create();//'uk_UA'
+        $this->faker = \Faker\Factory::create();
     }
+
+    /**
+     * @param $count
+     * @return int
+     */
     private function addTableUniversities($count){
         $var = 0;
         $query = $this->dbconnect->prepare('
         INSERT INTO `universities` (`nameUniver`, `cityUniver`, `siteUniver`) VALUES (:nameUniver, :cityUniver, :siteUniver)
-');
+        ');
         try {
             for ($i = 0; $i < $count; $i++) {
                 $query->bindValue(':nameUniver', 'unvr-' . $this->faker->company, \PDO::PARAM_STR);
                 $query->bindValue(':cityUniver', 'city-' . $this->faker->city, \PDO::PARAM_STR);
                 $query->bindValue(':siteUniver', 'site-' . $this->faker->address, \PDO::PARAM_STR);
-                if ($query->execute()) $var++;// or die(print_r($db->errorInfo(), false));
+                if ($query->execute())
+                    $var++;
             }
         }
-        catch (Exception $exception){
-            echo 'addTableUniversities'.$exception->getMessage();
+        catch (\Exception $exception){
+            echo $exception->getMessage();
         }
         return $var;
     }
+
+    /**
+     * @param $count
+     * @param $idUniver
+     * @return int
+     */
     private function addTableChairs($count, $idUniver){
         $query = $this->dbconnect->prepare('
         INSERT INTO `chairs` (`idUniver`, `nameChairs`) VALUES (:idUniver, :nameChairs)
@@ -50,11 +67,17 @@ class Fill
                 if ($query->execute()) $var++;
             }
         }
-        catch (Exception $exception){
-            echo 'addTableChairs'.$exception->getMessage();
+        catch (\Exception $exception){
+            echo $exception->getMessage();
         }
         return $var;
     }
+
+    /**
+     * @param $count
+     * @param $idChairs
+     * @return int
+     */
     private function addTableStudents($count, $idChairs){
         $query = $this->dbconnect->prepare('
         INSERT INTO `students` (`idChairs`,`firstnameStudent`,`lastnameStudent`,`numberphoneStudent`) VALUES (:idChairs,:firstnameStudent,:lastnameStudent,:numberphoneStudent)'
@@ -69,11 +92,17 @@ class Fill
                 if ($query->execute()) $var++;
             }
         }
-        catch (Exception $exception){
-            echo 'addTableStudents'.$exception->getMessage();
+        catch (\Exception $exception){
+            echo $exception->getMessage();
         }
         return $var;
     }
+
+    /**
+     * @param $count
+     * @param $idChairs
+     * @return int
+     */
     private function addTableTeacher($count, $idChairs){
         $query = $this->dbconnect->prepare('
         INSERT INTO `teacher` (`idChairs`, `firstnameTeacher`, `lastnameTeacher`) VALUES (:idChairs, :firstnameStudent, :lastnameStudent)
@@ -87,8 +116,8 @@ class Fill
                 if ($query->execute()) $var++;
             }
         }
-        catch(Exception $exception){
-            echo 'addTableTeacher'.$exception->getMessage();
+        catch(\Exception $exception){
+            echo $exception->getMessage();
         }
         return $var;
     }
@@ -104,11 +133,18 @@ class Fill
                 if ($query->execute()) $var++;
             }
         }
-        catch (Exception $exception){
+        catch (\Exception $exception){
             echo 'addTableDiscipline'.$exception->getMessage();
         }
         return $var;
     }
+
+    /**
+     * @param $count
+     * @param $idTeacher
+     * @param $idDiscipline
+     * @return int
+     */
     private function addTableTtd($count,$idTeacher,$idDiscipline)
     {
         $query = $this->dbconnect->prepare('
@@ -122,20 +158,25 @@ class Fill
                 if ($query->execute()) $var++;
             }
         }
-        catch (Exception $exception){
+        catch (\Exception $exception){
             echo 'addTableTtd'.$exception->getMessage();
         }
         return $var;
     }
     public function getReport(){
-        $var = array();
-        $var['universities'] = $this->addTableUniversities($this->count["universities"]);
-        $var['chairs'] = $this->addTableChairs($this->count["chairs"], $this->count["universities"]);
-        $var['students'] = $this->addTableStudents($this->count["students"], $this->count["chairs"]);
-        $var['teacher'] = $this->addTableTeacher($this->count["teacher"], $this->count["chairs"]);
-        $var['discipline'] = $this->addTableDiscipline($this->count["discipline"], $this->count["chairs"]);
-        $var['teacherToDiscipline'] = $this->addTableTtd(15, $this->count["teacher"], $this->count["discipline"]);
-        return $var;
+        try {
+            $var = array();
+            $var['universities'] = $this->addTableUniversities($this->count["universities"]);
+            $var['chairs'] = $this->addTableChairs($this->count["chairs"], $this->count["universities"]);
+            $var['students'] = $this->addTableStudents($this->count["students"], $this->count["chairs"]);
+            $var['teacher'] = $this->addTableTeacher($this->count["teacher"], $this->count["chairs"]);
+            $var['discipline'] = $this->addTableDiscipline($this->count["discipline"], $this->count["chairs"]);
+            $var['teacherToDiscipline'] = $this->addTableTtd(15, $this->count["teacher"], $this->count["discipline"]);
+            return $var;
+        }
+        catch(\Exception $exception){
+            echo $exception->getMessage();
+        }
     }
 }
 

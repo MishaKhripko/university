@@ -1,11 +1,21 @@
 <?php
 
+namespace Models;
 
+use Components\Db;
+
+/**
+ * Class Chairs
+ * @package Models
+ */
 class Chairs
 {
+    /**
+     * @return array
+     */
     static public function getListChairs(){
         $db = Db::getConnectionWithDb();
-        $newsList = array();
+        $newsList = [];
 
         $result = $db->query('
         SELECT chairs.idChairs, universities.nameUniver, chairs.nameChairs 
@@ -22,10 +32,14 @@ class Chairs
         }
         return $newsList;
     }
+
+    /**
+     * @param $idChairs
+     * @return bool|mixed
+     */
     static public function getChairsById($idChairs){
         $db = Db::getConnectionWithDb();
         if (isset($_POST["idChairs"])){
-            //switch ($_POST[$update])
             try{
                 $result = $db->prepare("
                 UPDATE chairs
@@ -42,7 +56,7 @@ class Chairs
             }
         }
         else {
-            $newList = array();
+            $newList = [];
             try {
                 $result = $db->query("
                 SELECT chairs.idChairs, universities.nameUniver, chairs.nameChairs 
@@ -58,6 +72,11 @@ class Chairs
             }
         }
     }
+
+    /**
+     * @param $idChairs
+     * @return bool
+     */
     static public function deleteChairsById($idChairs){
         $db = Db::getConnectionWithDb();
         $result = $db->prepare('
@@ -65,7 +84,7 @@ class Chairs
         WHERE idChairs = :idChairs
         ');
         $result->bindValue(':idChairs',$idChairs,\PDO::PARAM_INT);
-        $result->execute();
+        return $result->execute();
     }
     static public function addRecord($arrayPost){
         $db = Db::getConnectionWithDb();
