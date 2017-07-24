@@ -12,6 +12,7 @@ if (!empty($_SERVER['REQUEST_URI'])) {
     $url = trim($_SERVER['REQUEST_URI'], '/');
 }
 foreach ($routes as $uriPattern => $path) {
+    //$url = "chairs/open/1";
     if (preg_match("~$uriPattern~", $url)) {
         $internalRoute = preg_replace("~$uriPattern~", $path, $url);
         $segments = explode('/', $internalRoute);

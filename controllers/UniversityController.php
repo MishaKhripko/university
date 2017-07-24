@@ -6,10 +6,30 @@ use Models\University;
 class UniversityController
 {
     /**
+     * @param $content
+     * @param $itIsOpen
+     */
+    private function getHTML($content, $itIsOpen){
+        require_once(ROOT.'/vendor/twig/twig/lib/Twig/Autoloader.php');
+        \Twig_Autoloader::register();
+        $loader = new \Twig_Loader_Filesystem('templates');
+        $twig = new \Twig_Environment($loader, array(
+            'debug' => true));
+        $create = $twig->loadTemplate('univer.twig');
+        $array = array(
+            'title' => 'Університет',
+            'menu' => include(ROOT."/config/menu.php"),
+            'content' => $content,
+            'open' => $itIsOpen,
+        );
+        echo $view = $create->render($array);
+
+    }
+    /**
      * Index method. It run query "SELECT * FROM universities" and view this.
      * return: rows
      */
-    static public function actionIndex(){
+    public function actionIndex(){
         $listUniversity = [];
         if(isset($_POST['submit'])){
             $result = University::addUniversity(array($_POST['nameUniver'], $_POST['cityUniver'], $_POST['siteUniver']));
@@ -18,7 +38,8 @@ class UniversityController
             }
         }
         $listUniver = University::getListUniversities();
-        require_once(ROOT.'/views/university/index.php');
+        $this->getHTML($listUniver, false);
+        //require_once(ROOT.'/views/university/index.php');
     }
 
     /**
@@ -26,10 +47,10 @@ class UniversityController
      * This method open rows with table in new page (example: /univer/open/1)
      * result: row
      */
-    static public function actionOpen($idUniver){
+    public function actionOpen($idUniver){
         $arrayGetRow = University::getUniversityById($idUniver);
-
-        require_once(ROOT.'/views/university/update.php');
+        $this->getHTML($arrayGetRow, true);
+        //require_once(ROOT.'/views/university/update.php');
         return true;
     }
 
@@ -38,7 +59,7 @@ class UniversityController
      * This method delete rows with table Universities
      * return: true/false delete row
      */
-    static public function actionDelete($idUniver){
+    public function actionDelete($idUniver){
         $result = University::deleteUniversityById($idUniver);
         header('Location: /university');
     }

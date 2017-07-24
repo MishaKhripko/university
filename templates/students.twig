@@ -1,0 +1,121 @@
+{% include 'header.twig' %}
+<h1>{{ title }}</h1>
+<table>
+    <form action = "" method="post">
+        <tr>
+            <td colspan="5">
+                <input type="text" size="80" name="search">
+            </td>
+            <td>
+                <input type="submit" value = "Пошук">
+            </td>
+        </tr>
+    </form>
+    <tr>
+        <td>
+            <span>
+                Id
+            </span>
+        </td>
+        <td>
+            <span>
+                Кафедра
+            </span>
+        </td>
+        <td>
+            <span>
+                Імя
+            </span>
+        </td>
+        <td>
+            <span>
+                Прізвище
+            </span>
+        </td>
+        <td>
+            <span>
+                Номер телефону
+            </span>
+        </td>
+        <td>
+            <span>
+                Операції
+            </span>
+        </td>
+    </tr>
+    {% for item in content.students %}
+        <tr>
+            {% if open %}
+            <form action="/students/open/{{ item.idStudent }}" method="post">
+            {% endif %}
+            <td>
+                <input type ="text" size="3" name = "idStudent" readonly value ="{{ item.idStudent }}">
+            </td>
+            {% if open %}
+                <td>
+                    <select name ='idChairs'>
+                        {% for item in content.chairs %}
+                        <option value = {{ item.idChairs }}{% if content.chairs.nameChairs == content.student.nameChairs %} selected {% endif %}>
+                            {{ item.nameChairs }}
+                        </option>
+                    {% endfor %}
+                    </select>
+                </td>
+            {% else %}
+            <td>
+                <input type ="text" size="25" value ="{{ item.nameChairs }}">
+            </td>
+            {% endif %}
+            <td>
+                <input type ="text" size="10" name ='firstnameStudent' value ="{{ item.firstnameStudent }}">
+            </td>
+            <td>
+                <input type ="text" size="10" name ="lastnameStudent" value ="{{ item.lastnameStudent }}">
+            </td>
+            <td>
+                <input type ="text" size="10" name ="numberphoneStudent" value ="{{ item.numberphoneStudent }}">
+            </td>
+                {% if open %}
+                <td>
+                    <input type="submit" name="update" value="Оновити">
+                </td>
+            </form>
+                {% else %}
+                    <td>
+                        <a href="/students/open/{{ item.idStudent }}">Відкрити  </a>
+                        <a href="/students/delete/{{ item.idStudent }}">  Видалити</a>
+                    </td>
+                {% endif %}
+        </tr>
+    {% endfor %}
+    <tr>
+        <form action="" method="post">
+            <td>
+                <span>
+                    Додати:
+                </span>
+            </td>
+            <td>
+                <select name ='idChairs'>
+                    {% for item in content.chairs %}
+                    <option value = "{{ item.idChairs }}">
+                        {{ item.nameChairs }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td>
+                <input type ="text" size="10" name = "firstnameStudent">
+            </td>
+            <td>
+                <input type ="text" size="10" name = "lastnameStudent">
+            </td>
+            <td>
+                <input type ="text" size="10" name = "numberphoneStudent">
+            </td>
+            <td>
+                <input type="submit" value="Додати кафедру">
+            </td>
+        </form>
+    </tr>
+</table>

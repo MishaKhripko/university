@@ -58,7 +58,7 @@ class University
             SELECT * FROM universities
             WHERE idUniver = ".$idUniver.";
             ");
-                $result = $result->fetch(\PDO::FETCH_ASSOC);
+                $result = [$result->fetch(\PDO::FETCH_ASSOC)];
             } catch (Exception $exception) {
                 echo $exception->getMessage();
                 $result = FALSE;

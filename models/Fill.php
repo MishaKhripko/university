@@ -165,14 +165,14 @@ class Fill
     }
     public function getReport(){
         try {
-            $var = array();
-            $var['universities'] = $this->addTableUniversities($this->count["universities"]);
-            $var['chairs'] = $this->addTableChairs($this->count["chairs"], $this->count["universities"]);
-            $var['students'] = $this->addTableStudents($this->count["students"], $this->count["chairs"]);
-            $var['teacher'] = $this->addTableTeacher($this->count["teacher"], $this->count["chairs"]);
-            $var['discipline'] = $this->addTableDiscipline($this->count["discipline"], $this->count["chairs"]);
-            $var['teacherToDiscipline'] = $this->addTableTtd(15, $this->count["teacher"], $this->count["discipline"]);
-            return $var;
+            return array(
+                array('name' => 'Університети', 'value' => $this->addTableUniversities($this->count["universities"]),),
+                array('name' => 'Кафедри', 'value' => $this->addTableChairs($this->count["chairs"], $this->count["universities"]),),
+                array('name' => 'Студенти', 'value' => $this->addTableStudents($this->count["students"], $this->count["chairs"]),),
+                array('name' => 'Викладачі', 'value' => $this->addTableTeacher($this->count["teacher"], $this->count["chairs"]),),
+                array('name' => 'Дисципліни', 'value' => $this->addTableDiscipline($this->count["discipline"], $this->count["chairs"]),),
+                array('name' => 'Вчителі та дисципліни', 'value' => $this->addTableTtd(15, $this->count["teacher"], $this->count["discipline"]),),
+            );
         }
         catch(\Exception $exception){
             echo $exception->getMessage();

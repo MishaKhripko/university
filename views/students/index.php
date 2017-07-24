@@ -15,7 +15,7 @@
 <br>
 <h1>Список Студентів</h1>
 <table>
-    <form action = "" method="post">
+    <form action = "/students/open/" method="post">
         <tr>
             <td colspan="5">
                 <input type="text" size="80" name="search">

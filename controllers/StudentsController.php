@@ -12,6 +12,26 @@ use Models\Chairs;
 class StudentsController
 {
     /**
+     * @param $content
+     * @param $itIsOpen
+     */
+    private function getHTML($content, $itIsOpen){
+        require_once(ROOT.'/vendor/twig/twig/lib/Twig/Autoloader.php');
+        \Twig_Autoloader::register();
+        $loader = new \Twig_Loader_Filesystem('templates');
+        $twig = new \Twig_Environment($loader, array(
+            'debug' => true));
+        $create = $twig->loadTemplate('students.twig');
+        $array = array(
+            'title' => 'Студенти',
+            'menu' => include(ROOT."/config/menu.php"),
+            'content' => $content,
+            'open' => $itIsOpen,
+        );
+        echo $view = $create->render($array);
+
+    }
+    /**
      * @return bool
      */
     public function actionIndex(){
@@ -21,14 +41,17 @@ class StudentsController
                 return $result;
             }
         } else
+            $listStudents = [];
             if (isset($_POST['search'])) {
                 $listStudents = Students::getSearchStudent($_POST['search']);
-                require_once(ROOT . '/views/students/search.php');
+                $arrayListChairs = Chairs::getListChairs();
+                $this->getHTML(array('students' => $listStudents, 'chairs' => $arrayListChairs), false);                //require_once(ROOT . '/views/students/search.php');
                 return true;
             } else {
             $listStudents = Students::getlistStudents();
             $arrayListChairs = Chairs::getListChairs();
-            require_once(ROOT.'/views/students/index.php');
+            $this->getHTML(array('students' => $listStudents, 'chairs' => $arrayListChairs), false);
+            //require_once(ROOT.'/views/students/index.php');
             return true;
         }
 
@@ -39,9 +62,10 @@ class StudentsController
      * @return bool
      */
     public function actionOpen($idStudent){
-        $arrayIdStudent = Students::getStudentById($idStudent);
+        $listStudents = Students::getStudentById($idStudent);
         $arrayListChairs = Chairs::getListChairs();
-        require_once(ROOT.'/views/students/update.php');
+        $this->getHTML(array('students' => $listStudents, 'chairs' => $arrayListChairs), true);
+        //require_once(ROOT.'/views/students/update.php');
         return true;
     }
 

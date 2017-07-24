@@ -1,0 +1,76 @@
+{% include 'header.twig' %}
+<h1>{{ title }}</h1>
+<table>
+    <tr>
+        <td>
+            <span>Id</span>
+        </td>
+        <td>
+            <span>Університет</span>
+        </td>
+        <td>
+            <span>Кафедра</span>
+        </td>
+        <td>
+            <span>Операції</span>
+        </td>
+    </tr>
+    <!--
+
+    -->
+    {% for item in content.chairs %}
+    <tr>
+        {% if open %}
+            <form action = "/chairs/open/{{ item.idChairs }}" method ="post">
+        {% endif %}
+        <td>
+            <input type ="text" size="3" readonly name = "idChairs" value ="{{ item.idChairs }}">
+        </td>
+        <td>
+            <input type ="text" size="32" value ="{{ item.nameUniver }}">
+        </td>
+        <td>
+            <input type="text" size="32" name ="nameChairs" value ="{{ item.nameChairs }}">
+        </td>
+        {% if open%}
+        <td>
+            <input type="submit" name="update" value="Оновити">
+        </td>
+        {% else %}
+        <td>
+            <a href="/chairs/open/{{ item.idChairs }}">Відкрити  </a>
+            <a href="/chairs/delete/{{ item.idChairs }}">  Видалити</a>
+        </td>
+        {% endif %}
+        {% if open %}
+            </form>
+        {% endif %}
+    </tr>
+    {% endfor %}
+    <tr>
+        <form action="" method="post">
+            <td>
+                <span>
+                    Додати:
+                </span>
+            </td>
+            <td>
+                <select name = "idUniver">
+                    {% for item in content.universities %}
+                    <option value="{{ item.idUniver }}">
+                        {{ item.nameUniver }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td>
+                <input type ="text" size="32" name = "nameChairs">
+            </td>
+            <td>
+                <input type="submit" value="Додати кафедру">
+            </td>
+        </form>
+    </tr>
+</table>
+</body>
+</html>

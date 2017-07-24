@@ -98,7 +98,7 @@ class Students
             ORDER BY idStudent ASC
             ");
             $listStudents = $result->fetch(\PDO::FETCH_ASSOC);
-            return $listStudents;
+            return [$listStudents];
         }
     }
 

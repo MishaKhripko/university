@@ -1,0 +1,14 @@
+{% include 'header.twig' %}
+<h1>{{ title }}</h1>
+<p>
+    <table>
+        {% for item in content %}
+            <tr>
+                <td><span>Таблиця {{ item.name }}</span></td>
+                <td><span> заповнена на {{ item.value }} записів</span></td>
+            <tr>
+        {% endfor %}
+    </table>
+</p>
+</body>
+</html>

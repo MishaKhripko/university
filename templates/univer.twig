@@ -1,0 +1,84 @@
+{% include 'header.twig' %}
+<h1> {{ title }}</h1>
+<table>
+    <tr>
+        <td>
+            <span>
+                Id
+            </span>
+        </td>
+        <td>
+            <span>
+                Університет
+            </span>
+        </td>
+        <td>
+            <span>
+                Місто
+            </span>
+        </td>
+        <td>
+            <span>
+                Сайт
+            </span>
+        </td>
+        <td>
+            <span>
+                Операція
+            </span>
+        </td>
+    </tr>
+    {% if open %}
+    <form action="" method="post">
+        {% endif %}
+    {% for item in content %}
+    <tr>
+        <td>
+            <input type ="text" size="3" readonly name="idUniver" value ="{{ item.idUniver }}">
+        </td>
+        <td>
+            <input type ="text" size="20" readonly name="nameUniver" value ="{{ item.nameUniver }}">
+        </td>
+        <td>
+            <input type ="text" size="20" name="cityUniver" value ="{{ item.cityUniver }}">
+        </td>
+        <td>
+            <input type ="text" size="20" name="siteUniver" value="{{ item.siteUniver }}">
+        </td>
+        {% if open %}
+        <td>
+            <input type="submit" name="update" value="Оновити">
+        </td>
+        {% else %}
+        <td>
+            <a href="/university/open/{{ item.idUniver }}">Відкрити  </a>
+            <a href="/university/delete/{{ item.idUniver }}">  Видалити</a>
+        </td>
+        {% endif %}
+    </tr>
+    {% if open %}
+    </form>
+    {% endif %}
+    {% endfor %}
+    <tr>
+        <form action="" method="post">
+            <td>
+                <span>
+                    Додати:
+                </span>
+            </td>
+            <td>
+                <input type ="text" size="20" name = "nameUniver">
+            </td>
+            <td>
+                <input type ="text" size="20" name = "cityUniver">
+            </td>
+            <td>
+                <input type ="text" size="20" name ="siteUniver">
+            </td>
+            <td>
+                <input type="submit" name="submit" value="Ок">
+            </td>
+        </form>
+    </tr>
+</table>
